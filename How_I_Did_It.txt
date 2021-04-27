@@ -1,0 +1,74 @@
+Commodore 64: Marble Madness 
+protection skipping and recreating.
+By Zibri / RamJam
+
+Back in the 80s a new innovative game came out:
+Marble Madness.
+In this game you had to control a marble through a
+"3d" vertical landscape until you reach the finish line.
+The protection scheme was also innovative and almost impossible to copy
+or to crack. It was cracked eventually but only after a long time.
+I missed the fun at the time so, pretending is 1986 again I will try to
+achieve both results: 1) copy the game  2) disable the protection.
+
+By analyzing the disk, you'll immediately find that the "poop" is in track 2.
+Track 2 has no SYNC marks and some bit patterns recorded on it.
+It could be possible to reverse engineer the track itself from disk but I decided to
+follow another approach:
+since the protection is custom, there must be a custom drive code to detect it and 
+having the code of the loader it should be pretty simple to recreate it or skip it.
+Obviously the drive code is bfuscated and the C64 code is heavily protected.
+
+I decided to use one of my most used tricks in this case:
+I will modify on a copy of the original disk some instructions inside the loader code 
+to make it jump to $c000 where I prepared a small routine that will save all memory on a file.
+
+Analyzing the loader it immediately catches my eye the phrase "+2 pirateslayer boot programmed by kris hatlelid regina, sask. canada"
+And, later on: "out of my code hacker!".
+
+Before this last phrase there is a piece of code and after some trial and error I found  the right "hook".
+$a7, $04, $87, $01, $60 which reads as:
+
+LAX $04
+SAX $01
+RTS
+
+So I put the jump to $c000 instead of the first 3 bytes and save all memory.
+
+In the saved memory, I search for LDA $1C00, which usually appears in most loaders
+
+The first occurence of "AD 00 1C" is at $4C7 and here is all the secret drive code in the range $400-$713 !!!
+This code will be later sent to the drive at $300-$613 memory locations.
+
+
+Analyzing the drive code I found the main routine to check ofr the protection at $698 in C64 memory:
+
+The code, roughly does this:
+1) changes the density (framing) to "2" then reads all track waiting for $D7.
+2) wait for the end of $D7s and checks if the next byte is "$EB"
+3) checks if the next $200 couples of bytes are CC AD (1024 bytes in total)
+4) finally checks if the following 12 bytes are the same as the ones stored at $617 (in drive memory) $717 in C64 memory.
+   which are: 55 ae 9b 55  ad 55 cb ae  6b ab ad af
+5) if everything is fine it puts #$03 in $06 #$00 in $07 and returns.
+   note: this prepares the next sector to load which is sector 0 of track 3.
+
+So: now I have all I need to create a nice track 2 with the required bytes or to skip the check entirely.
+
+To skip the protection I will, again, put my code at the previous "hook" position.
+This time I will just patching a single byte in the drivecode.
+
+ LAX $04
+ SAX $01
+ LDA #$44
+ STA $06C6       ; patch drive code to skip protection
+ RTS
+
+For the fun of it I also created a program that writes track 2 in an even better way than the original ;)
+
+Assembling all the above together in a single D64 file, you will have the original content plus 2 programs:
+WP.PRG that will write track 2 thus creating a master copy including the protection.
+SP.PRG which will modify the disk in drive 8 so that the protection check will be totally skipped.
+
+Thanks for reading.
+Zibri
+
