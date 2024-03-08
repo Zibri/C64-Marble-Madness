@@ -43,14 +43,14 @@ This code will be later sent to the drive at $300-$613 memory locations.
 
 Analyzing the drive code I found the main routine to check for the protection at $698 in C64 memory:
 
-The code, roughly does this:
-1) changes the density (framing) to "2" then reads all track waiting for $D7.
+The code, does this:
+1) changes the density (framing) to 3 and then to "1" then reads all track waiting for $D7.
 2) wait for the end of $D7s and checks if the next byte is "$EB"
 3) checks if the next $200 couples of bytes are CC AD (1024 bytes in total)
 4) finally checks if the following 12 bytes are the same as the ones stored at $617 (in drive memory) $717 in C64 memory.
    which are: 55 ae 9b 55  ad 55 cb ae  6b ab ad af
 5) if everything is fine it puts #$03 in $06 #$00 in $07 and returns.
-   note: this prepares the next sector to load which is sector 0 of track 3.
+   this prepares the next sector to load which is sector 0 of track 3.
 
 So: now I have all I need to create a nice track 2 with the required bytes or to skip the check entirely.
 
