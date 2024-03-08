@@ -41,7 +41,7 @@ The first occurence of "AD 00 1C" is at $4C7 and here is all the secret drive co
 This code will be later sent to the drive at $300-$613 memory locations.
 
 
-Analyzing the drive code I found the main routine to check ofr the protection at $698 in C64 memory:
+Analyzing the drive code I found the main routine to check for the protection at $698 in C64 memory:
 
 The code, roughly does this:
 1) changes the density (framing) to "2" then reads all track waiting for $D7.
