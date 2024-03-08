@@ -72,3 +72,6 @@ SP.PRG which will modify the disk in drive 8 so that the protection check will b
 Thanks for reading.
 Zibri
 
+P.S.
+To Kris Hatlelid (who wrote "lick my userport" in the loader):
+Yank my Joystick :D
