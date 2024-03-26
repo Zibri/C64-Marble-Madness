@@ -17,7 +17,7 @@ It could be possible to reverse engineer the track itself from disk but I decide
 follow another approach:
 since the protection is custom, there must be a custom drive code to detect it and 
 having the code of the loader it should be pretty simple to recreate it or skip it.
-Obviously the drive code is bfuscated and the C64 code is heavily protected.
+Obviously the drive code is obfuscated and the C64 code is heavily protected.
 
 I decided to use one of my most used tricks in this case:
 I will modify on a copy of the original disk some instructions inside the loader code 
