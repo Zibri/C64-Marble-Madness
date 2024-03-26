@@ -33,7 +33,7 @@ LAX $04
 SAX $01
 RTS
 
-So I put the jump to $c000 instead of the first 3 bytes and save all memory.
+So I put the jump to $c000 instead of the first 3 bytes and write a routine at $C000 to save all memory.
 
 In the saved memory, I search for LDA $1C00, which usually appears in most loaders
 
@@ -75,3 +75,10 @@ Zibri
 P.S.
 To Kris Hatlelid (who wrote "lick my user port!" in the loader):
 Yank my Joystick :D
+
+Note:
+After more than a year, I re-analyzed the loader and I realized how LUCKY I was by using
+that "hook". The loading process is a MESS (hats off to Kris!) with lots of illegal opcodes and 
+deobfuscation using the cia #2 timer.
+I can only speculate on how long it took him to devise such a complex loader.
+But sometimes, luck is all you need.
