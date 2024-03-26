@@ -33,7 +33,7 @@ LAX $04
 SAX $01
 RTS
 
-So I put the jump to $c000 instead of the first 3 bytes and write a routine at $C000 to save all memory.
+So I put the jump to $c000 instead of the first 3 bytes and so save all memory.
 
 In the saved memory, I search for LDA $1C00, which usually appears in most loaders
 
