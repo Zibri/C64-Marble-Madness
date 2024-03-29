@@ -82,3 +82,12 @@ that "hook". The loading process is a MESS (hats off to Kris!) with lots of ille
 deobfuscation using the cia #2 timer.
 I can only speculate on how long it took him to devise such a complex loader.
 But sometimes, luck is all you need.
+
+Another nice message from the game programmer (Will Harvey):  
+Be cool, man.  If you can break the  
+protection, you deserve a free copy.  
+But don't give copies away.  
+Right now I'm broke and I need to make   
+some money.  -Will  
+
+Where is my ciopy, Will? :D
